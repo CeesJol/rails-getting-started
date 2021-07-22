@@ -45,8 +45,16 @@ class ArticlesController < ApplicationController
     redirect_to root_path
   end
 
+  def upvote
+    article = Article.find(params[:id])
+    article.update_attribute(:upvotes, article.upvotes + 1)
+
+    # Update article locally
+    redirect_to article
+  end
+
   private
     def article_params
-      params.require(:article).permit(:title, :body, :status)
+      params.require(:article).permit(:title, :body, :status, :upvotes)
     end
 end
